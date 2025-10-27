@@ -6,6 +6,8 @@ from ...utils.import_utils import define_import_structure
 
 if TYPE_CHECKING:
     from .configuration_omega17_vl import *
+    from .image_processing_omega17_vl import *
+    from .image_processing_omega17_vl_fast import *
     from .modeling_omega17_vl import *
     from .processing_omega17_vl import *
     from .video_processing_omega17_vl import *
