@@ -1205,12 +1205,12 @@ class Omega17VLProcessorKwargs(ProcessingKwargs, total=False):
 class Omega17VLProcessor(Qwen2VLProcessor):
     r"""
     Constructs a Omega17VL processor which wraps a Omega17VL image processor and a Qwen2 tokenizer into a single processor.
-    [`Omega17VLProcessor`] offers all the functionalities of [`Qwen2VLImageProcessor`] and [`Qwen2TokenizerFast`]. See the
+    [`Omega17VLProcessor`] offers all the functionalities of [`Qwen2VLImageProcessor`] and [`Omega17TokenizerFast`]. See the
     [`~Omega17VLProcessor.__call__`] and [`~Omega17VLProcessor.decode`] for more information.
     Args:
         image_processor ([`Qwen2VLImageProcessor`], *optional*):
             The image processor is a required input.
-        tokenizer ([`Qwen2TokenizerFast`], *optional*):
+        tokenizer ([`Omega17TokenizerFast`], *optional*):
             The tokenizer is a required input.
         video_processor ([`Omega17VLVideoProcessor`], *optional*):
             The video processor is a required input.
@@ -1246,7 +1246,7 @@ class Omega17VLProcessor(Qwen2VLProcessor):
     ) -> BatchFeature:
         """
         Main method to prepare for the model one or several sequences(s) and image(s). This method forwards the `text`
-        and `kwargs` arguments to Qwen2TokenizerFast's [`~Qwen2TokenizerFast.__call__`] if `text` is not `None` to encode
+        and `kwargs` arguments to Omega17TokenizerFast's [`~Omega17TokenizerFast.__call__`] if `text` is not `None` to encode
         the text. To prepare the vision inputs, this method forwards the `vision_infos` and `kwrags` arguments to
         Qwen2VLImageProcessor's [`~Qwen2VLImageProcessor.__call__`] if `vision_infos` is not `None`.
 
