@@ -232,7 +232,7 @@ class Omega17VLExpConfig(Qwen3VLConfig):
     >>> configuration = model.config
     ```"""
 
-    model_type = "qwen3_vl_moe"
+    model_type = "omega17_vl_exp"
     sub_configs = {"vision_config": Omega17VLExpVisionConfig, "text_config": Omega17VLExpTextConfig}
 
 
