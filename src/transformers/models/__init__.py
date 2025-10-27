@@ -291,6 +291,9 @@ if TYPE_CHECKING:
     from .qwen3_omni_moe import *
     from .qwen3_vl import *
     from .qwen3_vl_moe import *
+    from .omega17 import *
+    from .omega17_exp import *
+    from .omega17_vl import *
     from .omega17_vl_exp import *
     from .rag import *
     from .recurrent_gemma import *

@@ -67,6 +67,10 @@ HARDCODED_CONFIG_FOR_MODELS = {
     "donut": "DonutSwinConfig",
     "esmfold": "EsmConfig",
     "parakeet": "ParakeetCTCConfig",
+    "omega17": "Omega17Config",
+    "omega17-vl": "Omega17VLConfig",
+    "omega17-vl-exp": "Omega17VLExpConfig",
+    "omega17-exp": "Omega17ExpConfig",
 }
 
 _re_checkpoint = re.compile(r"\[(.+?)\]\((https://huggingface\.co/.+?)\)")
