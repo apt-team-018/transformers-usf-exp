@@ -39,10 +39,10 @@ from ..qwen2_vl.modeling_qwen2_vl import (
     VisionRotaryEmbedding,
 )
 from ..qwen2_vl.processing_qwen2_vl import Qwen2VLProcessor
-from ..qwen3.modeling_qwen3 import (
-    Qwen3Attention,
-    Qwen3DecoderLayer,
-    Qwen3Model,
+from ..omega17.modeling_omega17 import (
+    Omega17Attention,
+    Omega17DecoderLayer,
+    Omega17Model,
     apply_rotary_pos_emb,
     eager_attention_forward,
 )
@@ -383,7 +383,7 @@ class Omega17VLTextRotaryEmbedding(LlamaRotaryEmbedding):
         return cos.to(dtype=x.dtype), sin.to(dtype=x.dtype)
 
 
-class Omega17VLTextAttention(Qwen3Attention):
+class Omega17VLTextAttention(Omega17Attention):
     def __init__(self, config: Omega17VLTextConfig, layer_idx: int):
         super().__init__(config, layer_idx)
         del self.sliding_window
@@ -432,7 +432,7 @@ class Omega17VLTextAttention(Qwen3Attention):
         return attn_output, attn_weights
 
 
-class Omega17VLTextDecoderLayer(Qwen3DecoderLayer):
+class Omega17VLTextDecoderLayer(Omega17DecoderLayer):
     def __init__(self, config: Omega17VLTextConfig, layer_idx: int):
         super().__init__(config, layer_idx)
         del self.attention_type
@@ -670,7 +670,7 @@ class Omega17VLVisionModel(Omega17VLPreTrainedModel):
         "not a pure text-only model, as DeepStack integrates visual features into the early hidden states."
     )
 )
-class Omega17VLTextModel(Omega17VLPreTrainedModel, Qwen3Model):
+class Omega17VLTextModel(Omega17VLPreTrainedModel, Omega17Model):
     config: Omega17VLTextConfig
     _no_split_modules = ["Omega17VLTextDecoderLayer"]
 
@@ -1204,11 +1204,11 @@ class Omega17VLProcessorKwargs(ProcessingKwargs, total=False):
 
 class Omega17VLProcessor(Qwen2VLProcessor):
     r"""
-    Constructs a Omega17VL processor which wraps a Omega17VL image processor and a Qwen2 tokenizer into a single processor.
-    [`Omega17VLProcessor`] offers all the functionalities of [`Qwen2VLImageProcessor`] and [`Omega17TokenizerFast`]. See the
+    Constructs a Omega17VL processor which wraps a Omega17VL image processor and a Omega17 tokenizer into a single processor.
+    [`Omega17VLProcessor`] offers all the functionalities of [`Omega17VLImageProcessor`] and [`Omega17TokenizerFast`]. See the
     [`~Omega17VLProcessor.__call__`] and [`~Omega17VLProcessor.decode`] for more information.
     Args:
-        image_processor ([`Qwen2VLImageProcessor`], *optional*):
+        image_processor ([`Omega17VLImageProcessor`], *optional*):
             The image processor is a required input.
         tokenizer ([`Omega17TokenizerFast`], *optional*):
             The tokenizer is a required input.
@@ -1248,7 +1248,7 @@ class Omega17VLProcessor(Qwen2VLProcessor):
         Main method to prepare for the model one or several sequences(s) and image(s). This method forwards the `text`
         and `kwargs` arguments to Omega17TokenizerFast's [`~Omega17TokenizerFast.__call__`] if `text` is not `None` to encode
         the text. To prepare the vision inputs, this method forwards the `vision_infos` and `kwrags` arguments to
-        Qwen2VLImageProcessor's [`~Qwen2VLImageProcessor.__call__`] if `vision_infos` is not `None`.
+        Omega17VLImageProcessor's [`~Omega17VLImageProcessor.__call__`] if `vision_infos` is not `None`.
 
         Args:
             images (`PIL.Image.Image`, `np.ndarray`, `torch.Tensor`, `list[PIL.Image.Image]`, `list[np.ndarray]`, `list[torch.Tensor]`):

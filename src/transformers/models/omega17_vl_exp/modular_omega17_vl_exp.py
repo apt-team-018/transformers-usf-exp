@@ -1,4 +1,4 @@
-"""PyTorch Qwen3-VL-MOE model."""
+"""PyTorch Omega17-VL-EXP model."""
 
 from typing import Optional, Union
 
@@ -12,20 +12,20 @@ from ...modeling_rope_utils import RopeParameters, rope_config_validation, stand
 from ...modeling_utils import PreTrainedModel
 from ...processing_utils import Unpack
 from ...utils import TransformersKwargs, logging
-from ..qwen3_moe.modeling_qwen3_moe import (
-    Qwen3MoeDecoderLayer,
-    Qwen3MoePreTrainedModel,
-    Qwen3MoeRMSNorm,
+from ..omega17_exp.modeling_omega17_exp import (
+    Omega17ExpDecoderLayer,
+    Omega17ExpPreTrainedModel,
+    Omega17ExpRMSNorm,
     load_balancing_loss_func,
 )
-from ..qwen3_vl.configuration_qwen3_vl import Qwen3VLConfig, Qwen3VLVisionConfig
-from ..qwen3_vl.modeling_qwen3_vl import (
-    Qwen3VLCausalLMOutputWithPast,
-    Qwen3VLForConditionalGeneration,
-    Qwen3VLModel,
-    Qwen3VLTextAttention,
-    Qwen3VLTextModel,
-    Qwen3VLVisionModel,
+from ..omega17_vl.configuration_omega17_vl import Omega17VLConfig, Omega17VLVisionConfig
+from ..omega17_vl.modeling_omega17_vl import (
+    Omega17VLCausalLMOutputWithPast,
+    Omega17VLForConditionalGeneration,
+    Omega17VLModel,
+    Omega17VLTextAttention,
+    Omega17VLTextModel,
+    Omega17VLVisionModel,
 )
 
 
@@ -85,7 +85,7 @@ class Omega17VLExpTextConfig(PreTrainedConfig):
         num_experts (`int`, *optional*, defaults to 60):
             Number of routed experts.
         mlp_only_layers (`List[int]`, *optional*, defaults to `[]`):
-            Indicate which layers use Qwen3VLMoeMLP rather than Qwen3VLMoeSparseMoeBlock
+            Indicate which layers use Omega17VLExpMLP rather than Omega17VLExpSparseMoeBlock
             The list contains layer index, from 0 to num_layers-1 if we have num_layers layers
             If `mlp_only_layers` is empty, `decoder_sparse_step` is used to determine the sparsity.
         rope_parameters (`RopeParameters`, *optional*):
@@ -190,14 +190,14 @@ class Omega17VLExpTextConfig(PreTrainedConfig):
         super().__init__(tie_word_embeddings=tie_word_embeddings, **kwargs)
 
 
-class Omega17VLExpVisionConfig(Qwen3VLVisionConfig):
+class Omega17VLExpVisionConfig(Omega17VLVisionConfig):
     pass
 
 
-class Omega17VLExpConfig(Qwen3VLConfig):
+class Omega17VLExpConfig(Omega17VLConfig):
     r"""
     This is the configuration class to store the configuration of a [`Omega17VLExpModel`]. It is used to instantiate a
-    Qwen3-VL-MOE model according to the specified arguments, defining the model architecture.
+    Omega17-VL-EXP model according to the specified arguments, defining the model architecture.
 
     Configuration objects inherit from [`PreTrainedConfig`] and can be used to control the model outputs. Read the
     documentation from [`PreTrainedConfig`] for more information.
@@ -222,10 +222,10 @@ class Omega17VLExpConfig(Qwen3VLConfig):
     ```python
     >>> from transformers import Omega17VLExpForConditionalGeneration, Omega17VLExpConfig
 
-    >>> # Initializing a Qwen3-VL-MOE style configuration
+    >>> # Initializing a Omega17-VL-EXP style configuration
     >>> configuration = Omega17VLExpConfig()
 
-    >>> # Initializing a model from the omega17 vl exp style configuration
+    >>> # Initializing a model from the Omega17-VL-EXP style configuration
     >>> model = Omega17VLExpForConditionalGeneration(configuration)
 
     >>> # Accessing the model configuration
@@ -236,7 +236,7 @@ class Omega17VLExpConfig(Qwen3VLConfig):
     sub_configs = {"vision_config": Omega17VLExpVisionConfig, "text_config": Omega17VLExpTextConfig}
 
 
-class Omega17VLExpTextRMSNorm(Qwen3MoeRMSNorm):
+class Omega17VLExpTextRMSNorm(Omega17ExpRMSNorm):
     pass
 
 
@@ -328,17 +328,17 @@ class Omega17VLExpTextSparseMoeBlock(nn.Module):
         return routed_out
 
 
-class Omega17VLExpTextAttention(Qwen3VLTextAttention):
+class Omega17VLExpTextAttention(Omega17VLTextAttention):
     pass
 
 
-class Omega17VLExpTextDecoderLayer(Qwen3MoeDecoderLayer):
+class Omega17VLExpTextDecoderLayer(Omega17ExpDecoderLayer):
     pass
 
 
-class Omega17VLExpPreTrainedModel(Qwen3MoePreTrainedModel):
+class Omega17VLExpPreTrainedModel(Omega17ExpPreTrainedModel):
     config: Omega17VLExpConfig
-    _no_split_modules = ["Omega17VLExpTextDecoderLayer", "Qwen3VLMoeVisionBlock"]
+    _no_split_modules = ["Omega17VLExpTextDecoderLayer", "Omega17VLExpVisionBlock"]
 
     def _init_weights(self, module):
         """Initialize the weights."""
@@ -352,23 +352,23 @@ class Omega17VLExpPreTrainedModel(Qwen3MoePreTrainedModel):
             module.down_proj.data.normal_(mean=0.0, std=std)
 
 
-class Omega17VLExpVisionModel(Qwen3VLVisionModel):
+class Omega17VLExpVisionModel(Omega17VLVisionModel):
     pass
 
 
-class Omega17VLExpTextModel(Qwen3VLTextModel):
+class Omega17VLExpTextModel(Omega17VLTextModel):
     pass
 
 
-class Omega17VLExpCausalLMOutputWithPast(Qwen3VLCausalLMOutputWithPast):
+class Omega17VLExpCausalLMOutputWithPast(Omega17VLCausalLMOutputWithPast):
     aux_loss: Optional[torch.FloatTensor] = None
 
 
-class Omega17VLExpModel(Qwen3VLModel):
+class Omega17VLExpModel(Omega17VLModel):
     pass
 
 
-class Omega17VLExpForConditionalGeneration(Qwen3VLForConditionalGeneration):
+class Omega17VLExpForConditionalGeneration(Omega17VLForConditionalGeneration):
     def forward(
         self,
         input_ids: torch.LongTensor = None,
@@ -410,7 +410,7 @@ class Omega17VLExpForConditionalGeneration(Qwen3VLForConditionalGeneration):
                 "content": [
                     {
                         "type": "image",
-                        "image": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg",
+                        "image": "image-path",
                     },
                     {"type": "text", "text": "Describe this image in short."},
                 ],
